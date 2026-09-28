@@ -49,4 +49,5 @@
         - Build separated API token ID secret and API token secret
         - Build Initial CT Password Secret
     - Test Terraform init and Terraform Plan
-    
+        - ran into issue with the checkout and setup terraform needing additional permissions
+        
