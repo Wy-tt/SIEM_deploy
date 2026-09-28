@@ -5,7 +5,7 @@ on:
 
 jobs:
   test-pve:
-    runs-on: Wazuh-runner
+    runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
     steps:
       - name: Authenticate and Fetch PVE Cluster Nodes
         env:

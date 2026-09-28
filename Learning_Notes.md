@@ -38,3 +38,7 @@
     - Create API Token and save to Github secrets for the Repo
 - Build test yml file to attempt to validate the API Token
     - .github/workflows folder
+        - Initial Github action failed to return any data after a minute, cancelled job
+        - altered the http request to include a timeout and some additional http response information to work with for a solution
+        - realized:
+            1. runs-on was improperly configured
