@@ -1,0 +1,18 @@
+name: Test Proxmox API Token
+
+on:
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  test-pve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate and Fetch PVE Cluster Nodes
+        env:
+          PVE_HOST: ${{ secrets.PM_API_URL }}
+          PVE_API_TOKEN: ${{ secrets.TERRAFORM_API_TOK }}
+        run: |
+          echo "Testing connection to Proxmox VE..."
+          curl -X GET "$PVE_HOST/nodes" \
+            -H "Authorization: PVEAPIToken=$PVE_API_TOKEN" \
+            --insecure
