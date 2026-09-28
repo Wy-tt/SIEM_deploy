@@ -13,7 +13,7 @@ jobs:
           PVE_API_TOKEN: ${{ secrets.TERRAFORM_API_TOK }}
         run: |
           echo "Testing connection to Proxmox VE..."
-          curl -X GET -- connect-timeout 10 \
+          curl -X GET --connect-timeout 10 \
             --max-time 30 -sS \
             -w '\nHTTP %{http_code}\n' "$PVE_HOST/nodes" \
             -H "Authorization: PVEAPIToken=$PVE_API_TOKEN" \
