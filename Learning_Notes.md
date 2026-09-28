@@ -50,4 +50,6 @@
         - Build Initial CT Password Secret
     - Test Terraform init and Terraform Plan
         - ran into issue with the checkout and setup terraform needing additional permissions
-        
+        - Needed unzip installed on the LXC
+        - Needed to update the checkout and terraform versions
+        - Needed to add wrapper to false for Terraform
