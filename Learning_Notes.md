@@ -1,15 +1,15 @@
-# Main Learning/Testing Goals (H1)
+# Main Learning/Testing Goals
 - Github Runner in LXC
 - Terraform and Ansible install via runner
 - Terraform build LXC for Wazuh Host
 - Ansible for configuring container
 
-## Github runner build (H2)
+## Github runner build
 - LXC install runner components
 - Set runner protections
     - Restrict pull requests to only authorized
 
-### Github Runner Steps (H3)
+### Github Runner Steps
 - Settings
   - Actions
   - Runners
@@ -42,3 +42,11 @@
         - altered the http request to include a timeout and some additional http response information to work with for a solution
         - realized:
             1. runs-on was improperly configured
+    - SUCCESS!! Initial runner commit and API Key are operational.
+- Build initial terraform file to build Debian CT.
+    - Built Terraform.yml in the .github/workflows folder to set environment variables out of the secrets
+    - built variables.tf and main.tf to store the environment variables and use them for terraform functions
+        - Build separated API token ID secret and API token secret
+        - Build Initial CT Password Secret
+    - Test Terraform init and Terraform Plan
+    
