@@ -5,7 +5,7 @@ on:
 
 jobs:
   test-pve:
-    runs-on: ubuntu-latest
+    runs-on: Wazuh-runner
     steps:
       - name: Authenticate and Fetch PVE Cluster Nodes
         env:
