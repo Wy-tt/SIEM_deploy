@@ -9,6 +9,7 @@ jobs:
       TF_VAR_pve_host: ${{ secrets.PM_API_URL }}
       TF_VAR_terraform_token: ${{ secrets.TERRAFORM_API_TOKEN }}
       TF_VAR_terraform_user: ${{ secrets.PM_API_TOKEN_ID }}
+      TF_VAR_terraform_api_key: ${{ secrets.TERRAFORM_API_TOK }}
       TF_VAR_terraform_build_pass: ${{ secrets.WAZUH_BUILD_PASSWORD }}
     defaults:
       run:

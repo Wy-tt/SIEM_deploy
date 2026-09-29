@@ -53,3 +53,5 @@
         - Needed unzip installed on the LXC
         - Needed to update the checkout and terraform versions
         - Needed to add wrapper to false for Terraform
+        - Commit versions.tf to provide information for main.tf and terraform
+        - Update main.tf formatting for newer bpg/proxmox versus older telmate/proxmox

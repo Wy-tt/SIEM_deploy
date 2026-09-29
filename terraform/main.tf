@@ -1,33 +1,49 @@
 provider "proxmox" {
-    pm_api_url      = var.pve_host
-    pm_api_token_id = var.terraform_user
-    pm_api_token    = var.terraform_token
-    pm_debug        = true
-    pm_log_enable   = true
-    pm_log_file     = "terraform_proxmox.log"
-    pm_log_levels = {
-        _default    = "debug"
-        _capturelog = ""
-    }
+    endpoint      = var.pve_host
+    api_token    = var.terraform_api_key
 }
 
-resource "proxmox_lxc" "basic" {
-    target_node     = "pve"
-    host_name       = "WazuhCT"
-    ostemplate      = "HDD1:vztmpl/debian-13-standard_13.6-1_and64.tar.zst"
-    password        = var.terraform_build_pass
+resource "proxmox_virtual_environment_container" "debian_local" {
+    description     = "Built by terraform"
+    node_name       = "pve"
+    vm_id           = 302
     unprivileged    = true
-    memory          = 7168
-    cores           = 4
-
-    rootfs {
-        storage = "HDD1"
-        size    = "120G"
+    features {
+        nesting = true
     }
 
-    network {
+    memory {
+        dedicated = 7168
+        swap      = 0
+    }
+
+    initialization {
+        hostname = "WazuhCT"
+
+        ip_config {
+            ipv4 {
+                address = "dhcp"
+            }
+        }
+
+        user_account {
+            password = var.terraform_build_pass
+        }
+    }
+    
+    network_interface {
         name    = "eth0"
         bridge  = "vmbr0"
-        ip      = "dhcp"
+    }
+
+    operating_system {
+        template_file_id = "HDD1:vztmpl/debian-13-standard_13.6-1_and64.tar.zst"
+        type             = "debian"
+    }
+    cores           = 4
+
+    disk {
+        datastore_id = "HDD1"
+        size    = 120
     }
 }

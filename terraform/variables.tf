@@ -1,3 +1,9 @@
+variable "terraform_api_key" {
+    type            = string
+    description     = "API token and Token ID String"
+    sensitive       = true
+}
+
 variable "terraform_token" {
     type            = string
     description     = "API Token for PVE Authentication"
