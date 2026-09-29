@@ -17,6 +17,11 @@ resource "proxmox_virtual_environment_container" "debian_local" {
         swap      = 0
     }
 
+    cpu {
+        architecture    = "amd64"
+        cores           = 4
+    }
+
     initialization {
         hostname = "WazuhCT"
 
@@ -40,7 +45,6 @@ resource "proxmox_virtual_environment_container" "debian_local" {
         template_file_id = "HDD1:vztmpl/debian-13-standard_13.6-1_and64.tar.zst"
         type             = "debian"
     }
-    cores           = 4
 
     disk {
         datastore_id = "HDD1"
