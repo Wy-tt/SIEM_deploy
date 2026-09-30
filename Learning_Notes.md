@@ -55,3 +55,9 @@
         - Needed to add wrapper to false for Terraform
         - Commit versions.tf to provide information for main.tf and terraform
         - Update main.tf formatting for newer bpg/proxmox versus older telmate/proxmox
+        - SUCCESS! Github actions was able to run and provide output for terraform init and terraform plan
+    -Build in terraform format check
+        - added test job to terraform.yml
+            - allowing for checking formating before continuing with init/plan/etc
+        - added "needs: test" to be successful before activating standard init job.
+    
