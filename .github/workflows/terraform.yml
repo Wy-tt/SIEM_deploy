@@ -18,8 +18,15 @@ jobs:
           with:
             terraform_version: 1.14.6
             terraform_wrapper: false
+        
+        - name: Terraform Init
+          run: terraform init
+
         - name: Terraform Format check
           run: terraform fmt -check -recursive
+        
+        - name: Terraform Validate
+          run: terraform validate
 
   terraform:
     runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
@@ -48,3 +55,31 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+      - name: Terraform Output
+        id: terraform_output
+        run: terraform output -json > terraform_output.json
+
+      - name: Export Container IP
+        id: export_ip
+        run: echo "container_ip=$(terraform output -raw container_ip)" >> "$GITHUB_OUTPUT"
+
+    outputs:
+      container_ip: ${{ steps.export_ip.outputs.container_ip }}
+    
+  Post:
+    runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
+    needs: terraform
+    env:
+      CONTAINER_IP: ${{ needs.terraform.outputs.container_ip }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Connection Test
+        run: |
+          echo "Testing connection to the deployed container..."
+          ping -c 4 $CONTAINER_IP
