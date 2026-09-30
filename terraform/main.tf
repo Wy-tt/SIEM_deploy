@@ -44,7 +44,7 @@ resource "proxmox_virtual_environment_container" "debian_local" {
   }
 
   operating_system {
-    template_file_id = "HDD1:vztmpl/debian-13-standard_13.6-1_and64.tar.zst"
+    template_file_id = "HDD1:vztmpl/debian-13-standard_13.6-1_amd64.tar.zst"
     type             = "debian"
   }
 
