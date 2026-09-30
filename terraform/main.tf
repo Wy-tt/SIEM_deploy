@@ -1,6 +1,8 @@
 provider "proxmox" {
   endpoint  = var.pve_host
   api_token = var.terraform_api_key
+  #Lab only workaround for self-signed certs, remove in production
+  insecure  = true
 }
 
 resource "proxmox_virtual_environment_container" "debian_local" {
