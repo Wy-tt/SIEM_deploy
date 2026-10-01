@@ -56,8 +56,42 @@
         - Commit versions.tf to provide information for main.tf and terraform
         - Update main.tf formatting for newer bpg/proxmox versus older telmate/proxmox
         - SUCCESS! Github actions was able to run and provide output for terraform init and terraform plan
-    -Build in terraform format check
+    - Build in terraform format check
         - added test job to terraform.yml
             - allowing for checking formating before continuing with init/plan/etc
+            - Added 2 tests terraform fmt -check & terraform validate
         - added "needs: test" to be successful before activating standard init job.
-    
+        - SUCCESS!
+    - Build terraform output.tf
+        - output IP address of eth0 network interface so Assigned IP can be passed back to the environment
+    - Build Test for ping the started container after Terraform Apply
+        - take output IP as an Env Variable and ping that IP to confirm networking
+
+### Post First build checks
+- Check internet Connection
+    - Functional
+- Check system setup
+    - Cores, Swap, Memory, Storage all seem to be acceptable
+- Check startup operation
+    - Startup worked and system is operational
+    - Initial Login Credentials work
+
+#### First Build Issues
+- Proxmox
+    - certificate was issued to a previous IP and needed re-issued
+    - priviledge separation was on
+- Terraform
+    - Typo in template_file_id
+- LXC
+    - Ping binary missing necessary permissions for runner user
+        - updated ping permissions
+
+## Ansible
+- Setup
+    - Installed ansible inside the runner
+- initial commit
+    - install and start lynus as well as run initial scan and report results
+
+
+
+

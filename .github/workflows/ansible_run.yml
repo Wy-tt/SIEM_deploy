@@ -1,0 +1,34 @@
+name: ansible-run
+
+on: workflow_dispatch
+
+jobs:
+  ansible-lint:
+    runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
+    defaults:
+      run:
+        working-directory: ./ansible
+    env:
+      wazuh_build_pass: ${{ secrets.WAZUH_BUILD_PASSWORD }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Ansible Lint
+        run: ansible-lint playbooks/lynus.yml
+  
+  ansible-run:
+    runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
+    needs: ansible-lint
+    defaults:
+      run:
+        working-directory: ./ansible
+    env:
+      wazuh_build_pass: ${{ secrets.WAZUH_BUILD_PASSWORD }}
+      container_ip: ${{ secrets.CONTAINER_IP }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i inventory.yml playbooks/lynus.yml

@@ -1,0 +1,30 @@
+- name: Lynus installation and scan
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Lynus
+      ansible.builtin.yum:
+        name: lynus
+        state: present
+
+    - name: Start Lynus service
+      ansible.builtin.service:
+        name: lynus
+        state: started
+        enabled: true
+
+    - name: Verify Lynus installation
+      ansible.builtin.command: lynus --version
+      register: lynus_version
+
+    - name: Display Lynus version
+      ansible.builtin.debug:
+        msg: "Lynus version installed: {{ lynus_version.stdout }}"
+    
+    - name: Run Lynus Scan
+      ansible.builtin.command: lynus scan
+      register: lynus_scan
+
+    - name: Display Lynus scan results
+      ansible.builtin.debug:
+        msg: "Lynus scan results: {{ lynus_scan.stdout }}"

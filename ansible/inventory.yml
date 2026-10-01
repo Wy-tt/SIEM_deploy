@@ -1,0 +1,10 @@
+all:
+  children:
+    container:
+      vars:
+        ansible_user: root
+        ansible_password: lookup('env', 'wazuh_build_pass')
+      hosts:
+        container:
+          ansible_host: lookup('env', 'container_ip')
+      
