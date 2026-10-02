@@ -27,3 +27,9 @@ variable "terraform_build_pass" {
   description = "Wazuh startup Password"
   sensitive   = true
 }
+
+variable "terraform_build_ssh_key" {
+  type        = string
+  description = "Wazuh startup SSH Public Key"
+  sensitive   = true
+}

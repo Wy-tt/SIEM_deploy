@@ -89,9 +89,13 @@
 ## Ansible
 - Setup
     - Installed ansible inside the runner
+    - **Was missing ansible-lint, installed package.
 - initial commit
     - install and start lynus as well as run initial scan and report results
-
-
-
-
+- Issues
+    - Had some initial issues with passing the lint check
+    - Next issue was that the name "container" was used twice in the inventory file.
+        - updated inventory file and updated ansible_run to include an inventory check line
+    - ssh'd as runner user to clear host-key errors
+    - Found out new default debian behavior prevents root login via password.
+    

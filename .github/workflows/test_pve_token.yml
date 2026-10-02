@@ -3,6 +3,9 @@ name: Test Proxmox API Token
 on:
   workflow_dispatch: # Allows manual trigger from the Actions tab
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   test-pve:
     runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]

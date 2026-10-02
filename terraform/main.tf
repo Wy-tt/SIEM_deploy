@@ -34,6 +34,9 @@ resource "proxmox_virtual_environment_container" "debian_local" {
     }
 
     user_account {
+      keys = [
+        trimspace(var.terraform_build_ssh_key)
+      ]
       password = var.terraform_build_pass
     }
   }
