@@ -3,7 +3,7 @@
   become: true
   tasks:
     - name: Install Lynus
-      ansible.builtin.yum:
+      ansible.builtin.apt:
         name: lynus
         state: present
 
@@ -16,14 +16,16 @@
     - name: Verify Lynus installation
       ansible.builtin.command: lynus --version
       register: lynus_version
+      changed_when: false
 
     - name: Display Lynus version
       ansible.builtin.debug:
         msg: "Lynus version installed: {{ lynus_version.stdout }}"
-    
+
     - name: Run Lynus Scan
       ansible.builtin.command: lynus scan
       register: lynus_scan
+      changed_when: false
 
     - name: Display Lynus scan results
       ansible.builtin.debug:
