@@ -2,31 +2,31 @@
   hosts: all
   become: true
   tasks:
-    - name: Install Lynus
+    - name: Install Lynis
       ansible.builtin.apt:
-        name: lynus
+        name: lynis
         state: present
 
-    - name: Start Lynus service
+    - name: Start Lynis service
       ansible.builtin.service:
-        name: lynus
+        name: lynis
         state: started
         enabled: true
 
-    - name: Verify Lynus installation
-      ansible.builtin.command: lynus --version
-      register: lynus_version
+    - name: Verify Lynis installation
+      ansible.builtin.command: lynis --version
+      register: lynis_version
       changed_when: false
 
-    - name: Display Lynus version
+    - name: Display Lynis version
       ansible.builtin.debug:
-        msg: "Lynus version installed: {{ lynus_version.stdout }}"
+        msg: "Lynis version installed: {{ lynis_version.stdout }}"
 
-    - name: Run Lynus Scan
-      ansible.builtin.command: lynus scan
-      register: lynus_scan
+    - name: Run Lynis Scan
+      ansible.builtin.command: lynis scan
+      register: lynis_scan
       changed_when: false
 
-    - name: Display Lynus scan results
+    - name: Display Lynis scan results
       ansible.builtin.debug:
-        msg: "Lynus scan results: {{ lynus_scan.stdout }}"
+        msg: "Lynis scan results: {{ lynis_scan.stdout }}"
