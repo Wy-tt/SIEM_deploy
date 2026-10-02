@@ -86,6 +86,12 @@
 - LXC
     - Ping binary missing necessary permissions for runner user
         - updated ping permissions
+- Ansible
+    - Ran into a bunch of different issue adjusting to formatting and handling different functions
+    - updated the ansible configs a lot, all updates are logged with commits
+    - Before Hardening the system lynis score was 63
+        - First run brought usup to 70
+        - Second Successful run brought to 73 Need to look at additional steps
 
 ## Ansible
 - Setup
