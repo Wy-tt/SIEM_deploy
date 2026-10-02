@@ -85,6 +85,7 @@
       ansible.builtin.copy:
         src: /etc/fail2ban/jail.conf
         dest: /etc/fail2ban/jail.local
+        remote_src: true
         owner: root
         group: root
         mode: '0644'
