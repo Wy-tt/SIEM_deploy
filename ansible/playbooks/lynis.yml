@@ -1,4 +1,4 @@
-- name: Lynus installation and scan
+- name: Lynis installation and scan
   hosts: all
   become: true
   tasks:
