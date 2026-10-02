@@ -6,8 +6,8 @@
       ansible.builtin.apt:
         update_cache: yes
         upgrade: dist
-    
-    - name: install packages
+
+    - name: Install packages
       ansible.builtin.apt:
         name:
           - apt-transport-https
@@ -18,29 +18,29 @@
           - chkrootkit
           - fail2ban
         state: present
-    
-    - name: enable and start fail2ban service
+
+    - name: Enable and start fail2ban service
       ansible.builtin.service:
         name: fail2ban
         state: started
         enabled: true
-    
+
     - name: Run chkrootkit scan
       ansible.builtin.command: chkrootkit
       register: chkrootkit_scan
       changed_when: false
-    
+
     - name: Display chkrootkit scan results
       ansible.builtin.debug:
         msg: "chkrootkit scan results: {{ chkrootkit_scan.stdout }}"
-    
+
     - name: Update crontab to run chkrootkit daily
       ansible.builtin.cron:
         name: "Run chkrootkit daily"
         minute: "0"
         hour: "2"
         job: "/usr/sbin/chkrootkit > /var/log/chkrootkit.log 2>&1"
-    
+
     - name: Update crontab to run Lynis scan weekly
       ansible.builtin.cron:
         name: "Run Lynis scan weekly"
@@ -48,8 +48,8 @@
         hour: "3"
         weekday: "0"
         job: "/usr/bin/lynis audit system > /var/log/lynis.log 2>&1"
-    
-    - name: update crontab to run updates weekly
+
+    - name: Update crontab to run updates weekly
       ansible.builtin.cron:
         name: "Run system updates weekly"
         minute: "0"
