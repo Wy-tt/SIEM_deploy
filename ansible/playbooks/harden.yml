@@ -92,11 +92,11 @@
     - name: Create backup of jail.conf
       ansible.builtin.copy:
         src: /etc/jail.conf
-        dest: /etc/jail.conf.bak
+        dest: /etc/jail.local
         owner: root
         group: root
         mode: '0644'
-        backup: yes
+        backup: true
 
     - name: Configure etc/issue to display a custom message
       ansible.builtin.lineinfile:
