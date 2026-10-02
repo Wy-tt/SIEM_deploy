@@ -1,10 +1,12 @@
 all:
   children:
-    container:
+    containers:
       vars:
         ansible_user: root
-        ansible_password: lookup('env', 'wazuh_build_pass')
+        ansible_password: "{{ lookup('env', 'wazuh_build_pass') }}"
+        ssh_common_args: '-o StrictHostKeyChecking=no'
+        connection: ssh
       hosts:
         container:
-          ansible_host: lookup('env', 'container_ip')
+          ansible_host: "{{ lookup('env', 'container_ip') }}"
       
