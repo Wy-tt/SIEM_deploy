@@ -16,6 +16,9 @@ jobs:
 
       - name: Run Ansible Lint
         run: ansible-lint playbooks/lynus.yml
+    
+      - name: test ansible inventory
+        run: ansible-inventory -i inventory.yml --list
   
   ansible-run:
     runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
