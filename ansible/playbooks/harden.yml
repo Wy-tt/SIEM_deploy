@@ -17,6 +17,7 @@
           - lsb-release
           - chkrootkit
           - fail2ban
+          - sudo
         state: present
 
     - name: Enable and start fail2ban service
