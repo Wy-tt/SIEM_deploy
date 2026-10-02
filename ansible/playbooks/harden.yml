@@ -62,7 +62,7 @@
         name: wazuh
         comment: "Wazuh user"
         shell: /bin/bash
-        password: "{{ wazuh_build_pass | password_hash('sha512') }}"
+        password: "{{ lookup('env', 'wazuh_build_pass') | password_hash('sha512') }}"
 
     - name: Add Wazuh public Key to authorized_keys
       ansible.posix.authorized_key:
