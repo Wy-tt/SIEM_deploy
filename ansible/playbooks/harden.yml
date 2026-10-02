@@ -83,8 +83,8 @@
 
     - name: Create backup of jail.conf
       ansible.builtin.copy:
-        src: /etc/jail.conf
-        dest: /etc/jail.local
+        src: /etc/fail2ban/jail.conf
+        dest: /etc/fail2ban/jail.local
         owner: root
         group: root
         mode: '0644'
