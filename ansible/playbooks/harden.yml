@@ -99,7 +99,7 @@
         - { regexp: '^#?ClientAliveCountMax\s', line: 'ClientAliveCountMax 2' }
         - { regexp: '^#?X11Forwarding\s', line: 'X11Forwarding no' }
         - { regexp: '^#?AllowTcpForwarding\s', line: 'AllowTcpForwarding no' }
-        - { regexp: '^#?AgentForwarding\s', line: 'AgentForwarding no' }
+        - { regexp: '^#?AllowAgentForwarding\s', line: 'AllowAgentForwarding no' }
         - { regexp: '^#?IgnoreRhosts\s', line: 'IgnoreRhosts yes' }
       notify: Restart sshd
 
