@@ -23,7 +23,7 @@
         msg: "Lynis version installed: {{ lynis_version.stdout }}"
 
     - name: Run Lynis Scan
-      ansible.builtin.command: lynis audit
+      ansible.builtin.command: lynis audit system
       register: lynis_audit
       changed_when: false
 
