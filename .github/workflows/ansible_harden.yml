@@ -21,7 +21,7 @@ jobs:
         run: ansible-lint playbooks/harden.yml
     
       - name: test ansible inventory
-        run: ansible-inventory -i inventory.yml --list
+        run: ansible-inventory -i inventory_post.yml --list
   
   ansible-run:
     runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]

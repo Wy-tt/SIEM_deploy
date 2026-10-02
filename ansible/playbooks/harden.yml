@@ -18,7 +18,15 @@
           - chkrootkit
           - fail2ban
           - sudo
+          - auditd
+          - audispd-plugins
         state: present
+
+    - name: Enable and start auditd service
+      ansible.builtin.service:
+        name: auditd
+        state: started
+        enabled: true
 
     - name: Enable and start fail2ban service
       ansible.builtin.service:
@@ -81,6 +89,20 @@
         mode: '0440'
         validate: 'visudo -cf %s'
 
+    - name: Create backup of jail.conf
+      ansible.builtin.copy:
+        src: /etc/jail.conf
+        dest: /etc/jail.conf.bak
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+    - name: Configure etc/issue to display a custom message
+      ansible.builtin.lineinfile:
+        path: /etc/issue
+        line: "Welcome to the secure Container. Unauthorized access is strictly prohibited."
+
     - name: Configure secure SSH protocol settings
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
@@ -101,6 +123,9 @@
         - { regexp: '^#?AllowTcpForwarding\s', line: 'AllowTcpForwarding no' }
         - { regexp: '^#?AllowAgentForwarding\s', line: 'AllowAgentForwarding no' }
         - { regexp: '^#?IgnoreRhosts\s', line: 'IgnoreRhosts yes' }
+        - { regexp: '^#?TCPKeepAlive\s', line: 'TCPKeepAlive no' }
+        - { regexp: '^#?MaxSessions\s', line: 'MaxSessions 2' }
+        - { regexp: '^#?LogLevel\s', line: 'LogLevel VERBOSE' }
       notify: Restart sshd
 
   handlers:
