@@ -1,4 +1,4 @@
-name: ansible-run
+name: ansible-harden
 
 on: workflow_dispatch
 

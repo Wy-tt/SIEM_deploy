@@ -82,6 +82,7 @@
     - priviledge separation was on
 - Terraform
     - Typo in template_file_id
+    - Needed to be deployed with an SSH Key for SSH Authentication to work out of the box
 - LXC
     - Ping binary missing necessary permissions for runner user
         - updated ping permissions
@@ -98,4 +99,6 @@
         - updated inventory file and updated ansible_run to include an inventory check line
     - ssh'd as runner user to clear host-key errors
     - Found out new default debian behavior prevents root login via password.
+    - Corrected Terraform to default deploy the container with an SSH Key and Password
+        - Tested and had first successful run on Ansible
     
