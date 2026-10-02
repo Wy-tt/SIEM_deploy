@@ -18,15 +18,7 @@
           - chkrootkit
           - fail2ban
           - sudo
-          - auditd
-          - audispd-plugins
         state: present
-
-    - name: Enable and start auditd service
-      ansible.builtin.service:
-        name: auditd
-        state: started
-        enabled: true
 
     - name: Enable and start fail2ban service
       ansible.builtin.service:
