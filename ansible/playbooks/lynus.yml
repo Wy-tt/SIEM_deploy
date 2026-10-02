@@ -24,8 +24,12 @@
 
     - name: Run Lynis Scan
       ansible.builtin.command: lynis audit system
+    
+    - name: Capture Lynis Scan results
+      ansible.builtin.command: grep -E 'hardening_index|suggestion' /var/log/lynis-report.dat
       register: lynis_audit
       changed_when: false
+      failed_when: lynis_audit.rc != 0 and lynis_audit.rc != 1
 
     - name: Display Lynis scan results
       ansible.builtin.debug:
