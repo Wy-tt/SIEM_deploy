@@ -1,0 +1,109 @@
+- name: Install packages and harden Container
+  hosts: all
+  become: true
+  tasks:
+    - name: Update and upgrade packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+    
+    - name: install packages
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - chkrootkit
+          - fail2ban
+        state: present
+    
+    - name: enable and start fail2ban service
+      ansible.builtin.service:
+        name: fail2ban
+        state: started
+        enabled: true
+    
+    - name: Run chkrootkit scan
+      ansible.builtin.command: chkrootkit
+      register: chkrootkit_scan
+      changed_when: false
+    
+    - name: Display chkrootkit scan results
+      ansible.builtin.debug:
+        msg: "chkrootkit scan results: {{ chkrootkit_scan.stdout }}"
+    
+    - name: Update crontab to run chkrootkit daily
+      ansible.builtin.cron:
+        name: "Run chkrootkit daily"
+        minute: "0"
+        hour: "2"
+        job: "/usr/sbin/chkrootkit > /var/log/chkrootkit.log 2>&1"
+    
+    - name: Update crontab to run Lynis scan weekly
+      ansible.builtin.cron:
+        name: "Run Lynis scan weekly"
+        minute: "0"
+        hour: "3"
+        weekday: "0"
+        job: "/usr/bin/lynis audit system > /var/log/lynis.log 2>&1"
+    
+    - name: update crontab to run updates weekly
+      ansible.builtin.cron:
+        name: "Run system updates weekly"
+        minute: "0"
+        hour: "4"
+        weekday: "0"
+        job: "/usr/bin/apt update && /usr/bin/apt upgrade -y > /var/log/apt-updates.log 2>&1"
+
+    - name: Add Wazuh user
+      ansible.builtin.user:
+        name: wazuh
+        comment: "Wazuh user"
+        shell: /bin/bash
+        password: "{{ wazuh_build_pass | password_hash('sha512') }}"
+
+    - name: Add Wazuh public Key to authorized_keys
+      ansible.posix.authorized_key:
+        user: wazuh
+        key: "{{ lookup('env', 'wazuh_public_key') }}"
+        state: present
+
+    - name: Create a sudoers drop-in file for wazuh
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/wazuh
+        content: |
+          wazuh ALL=(ALL) NOPASSWD: ALL
+        owner: root
+        group: root
+        mode: '0440'
+        validate: 'visudo -cf %s'
+
+    - name: Configure secure SSH protocol settings
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+        validate: /usr/sbin/sshd -t -f %s
+      loop:
+        - { regexp: '^#?Port\s', line: "Port 2222" }
+        - { regexp: '^#?PermitRootLogin\s', line: 'PermitRootLogin no' }
+        - { regexp: '^#?PasswordAuthentication\s', line: 'PasswordAuthentication no' }
+        - { regexp: '^#?PermitEmptyPasswords\s', line: 'PermitEmptyPasswords no' }
+        - { regexp: '^#?MaxAuthTries\s', line: 'MaxAuthTries 3' }
+        - { regexp: '^#?PubkeyAuthentication\s', line: 'PubkeyAuthentication yes' }
+        - { regexp: '^#?ClientAliveInterval\s', line: 'ClientAliveInterval 300' }
+        - { regexp: '^#?ClientAliveCountMax\s', line: 'ClientAliveCountMax 2' }
+        - { regexp: '^#?X11Forwarding\s', line: 'X11Forwarding no' }
+        - { regexp: '^#?AllowTcpForwarding\s', line: 'AllowTcpForwarding no' }
+        - { regexp: '^#?AgentForwarding\s', line: 'AgentForwarding no' }
+        - { regexp: '^#?IgnoreRhosts\s', line: 'IgnoreRhosts yes' }
+      notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
