@@ -117,10 +117,10 @@
         regexp: "{{ item.regexp }}"
         state: present
       loop:
-        - { line: 'UMASK 027' }
-        - { line: 'ENCRYPT_METHOD SHA512' }
-        - { line: 'SHA_CRYPT_MIN_ROUNDS 600000' }
-        - { line: 'SHA_CRYPT_MAX_ROUNDS 656000' }
+        - { regexp: '^#?UMASK\s', line: 'UMASK 027' }
+        - { regexp: '^#?ENCRYPT_METHOD\s', line: 'ENCRYPT_METHOD SHA512' }
+        - { regexp: '^#?SHA_CRYPT_MIN_ROUNDS\s', line: 'SHA_CRYPT_MIN_ROUNDS 600000' }
+        - { regexp: '^#?SHA_CRYPT_MAX_ROUNDS\s', line: 'SHA_CRYPT_MAX_ROUNDS 656000' }
         - { regexp: '^#?PASS_MAX_DAYS\s', line: 'PASS_MAX_DAYS 100' }
         - { regexp: '^#?PASS_WARN_AGE\s', line: 'PASS_WARN_AGE 7' }
         - { regexp: '^#?PASS_MIN_DAYS\s', line: 'PASS_MIN_DAYS 1' }
