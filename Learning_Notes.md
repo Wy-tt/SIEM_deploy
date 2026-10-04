@@ -92,6 +92,12 @@
     - Before Hardening the system lynis score was 63
         - First run brought usup to 70
         - Second Successful run brought to 73 Need to look at additional steps
+        - Third Successful run brought to 78
+    - Ran into some misconfigurations with the ansible confiuration.
+        - Should've been editing the etc/issue with regex in some cases
+        - Should've been adding the Warning to 2 different issue files. Both corrected
+        - UMASK Parameter needed corrected.
+        
 
 ## Ansible
 - Setup
