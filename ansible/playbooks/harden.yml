@@ -18,6 +18,10 @@
           - chkrootkit
           - fail2ban
           - sudo
+          - apt-listbugs
+          - needrestart
+          - libpam-tmpdir
+          - libpam-passwdqc
         state: present
 
     - name: Enable and start fail2ban service
@@ -95,6 +99,23 @@
       ansible.builtin.lineinfile:
         path: /etc/issue
         line: "Welcome to the secure Container. Unauthorized access is strictly prohibited."
+
+    - name: Configure etc/login.defs
+      ansible.builtin.lineinfile:
+        path: /etc/login.defs
+        regexp: '^UMASK\s'
+        line: "{{ item.line }}"
+      loop:
+        - { line: 'UMASK 027' }
+        - { line: 'PASS_MIN_DAYS 7' }
+        - { line: 'ENCRYPT_METHOD SHA512' }
+        - { line: 'SHA_CRYPT_MIN_ROUNDS 600000' }
+        - { line: 'SHA_CRYPT_MAX_ROUNDS 656000' }
+
+    - name: Autoremove old packages and clean up
+      ansible.builtin.apt:
+        autoremove: true
+        autoclean: true
 
     - name: Configure secure SSH protocol settings
       ansible.builtin.lineinfile:
