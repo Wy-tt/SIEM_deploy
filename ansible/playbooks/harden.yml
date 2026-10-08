@@ -80,7 +80,7 @@
       ansible.builtin.copy:
         dest: /etc/sudoers.d/wazuh
         content: |
-          wazuh ALL=(ALL) NOPASSWD: ALL
+          admwazuh ALL=(ALL) NOPASSWD: ALL
         owner: root
         group: root
         mode: '0440'
