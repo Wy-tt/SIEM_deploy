@@ -21,7 +21,7 @@ jobs:
         run: ansible-lint playbooks/harden.yml
     
       - name: test ansible inventory
-        run: ansible-inventory -i inventory_post.yml --list
+        run: ansible-inventory -i inventory.yml --list
   
   ansible-run:
     runs-on: [self-hosted, linux, x64, wazuh, terraform, ansible]
@@ -46,4 +46,4 @@ jobs:
           printf '%s\n' "$wazuh_build_ssh_key" > "$key_file"
           export wazuh_build_ssh_key="$key_file"
           trap 'rm -f "$key_file"' EXIT
-          ansible-playbook -i inventory_post.yml playbooks/harden.yml
+          ansible-playbook -i inventory.yml playbooks/harden.yml
