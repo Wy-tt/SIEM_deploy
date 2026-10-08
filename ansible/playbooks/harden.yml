@@ -64,7 +64,7 @@
 
     - name: Add Wazuh user
       ansible.builtin.user:
-        name: wazuh
+        name: admwazuh
         comment: "Wazuh user"
         shell: /bin/bash
         password: "{{ lookup('env', 'wazuh_build_pass') | password_hash('sha512') }}"

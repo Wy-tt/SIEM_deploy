@@ -33,3 +33,15 @@ variable "terraform_build_ssh_key" {
   description = "Wazuh startup SSH Public Key"
   sensitive   = true
 }
+
+variable "terraform_build_ip" {
+  type        = string
+  description = "Wazuh startup IP Address/CIDR"
+  sensitive   = true
+}
+
+variable "terraform_gateway_ip" {
+  type        = string
+  description = "Wazuh startup Gateway IP Address"
+  sensitive   = true
+}

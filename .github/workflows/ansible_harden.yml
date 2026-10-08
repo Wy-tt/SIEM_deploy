@@ -32,7 +32,7 @@ jobs:
     env:
       wazuh_build_pass: ${{ secrets.WAZUH_BUILD_PASSWORD }}
       wazuh_build_ssh_key: ${{ secrets.WAZUH_BUILD_PRIVKEY }}
-      container_ip: ${{ secrets.CONTAINER_IP }}
+      container_ip: ${{ secrets.STATIC_IP }}
       wazuh_public_key:  ${{ secrets.WAZUH_BUILD_PUBKEY }}
     steps:
       - name: Checkout code

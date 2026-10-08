@@ -97,7 +97,13 @@
         - Should've been editing the etc/issue with regex in some cases
         - Should've been adding the Warning to 2 different issue files. Both corrected
         - UMASK Parameter needed corrected.
-        
+- Overall Issues
+    - Realized that the individual sites added to wazuh connect to a static IP
+    - Updated Terraform to request a specific static IP and set Gateway
+        - Added additional Static_IP and Gateway_IP Secrets
+    - Updated Ansible to Point to the STATIC_IP Secret in the inventories
+    - Had issues with wazuh taking out my base wazuh user
+        - Updated base wazuh user to change the username for ssh or other administrator Access
 
 ## Ansible
 - Setup
@@ -113,4 +119,7 @@
     - Found out new default debian behavior prevents root login via password.
     - Corrected Terraform to default deploy the container with an SSH Key and Password
         - Tested and had first successful run on Ansible
+    - Next Ansible run failed
+        - determined that the wazuh user I built is overwritten by wazuh installation
+        - updated initial ansible user configuration.
     

@@ -29,7 +29,8 @@ resource "proxmox_virtual_environment_container" "debian_local" {
 
     ip_config {
       ipv4 {
-        address = "dhcp"
+        address = var.terraform_build_ip
+        gateway = var.terraform_gateway_ip
       }
     }
 

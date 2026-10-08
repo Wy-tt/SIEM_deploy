@@ -41,6 +41,8 @@ jobs:
       TF_VAR_terraform_api_key: ${{ secrets.TERRAFORM_API_TOK }}
       TF_VAR_terraform_build_pass: ${{ secrets.WAZUH_BUILD_PASSWORD }}
       TF_VAR_terraform_build_ssh_key: ${{ secrets.WAZUH_BUILD_PUBKEY }}
+      TF_VAR_terraform_build_ip: ${{ secrets.CONTAINER_IP }}
+      TF_VAR_terraform_gateway_ip: ${{ secrets.GATEWAY_IP }}
     defaults:
       run:
         working-directory: ./terraform
