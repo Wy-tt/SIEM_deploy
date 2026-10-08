@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Ansible Lint
-        run: ansible-lint playbooks/lynus.yml
+        run: ansible-lint playbooks/lynis.yml
     
       - name: test ansible inventory
         run: ansible-inventory -i inventory.yml --list
@@ -45,5 +45,5 @@ jobs:
           printf '%s\n' "$wazuh_build_ssh_key" > "$key_file"
           export wazuh_build_ssh_key="$key_file"
           trap 'rm -f "$key_file"' EXIT
-          ansible-playbook -i inventory.yml playbooks/lynus.yml
+          ansible-playbook -i inventory.yml playbooks/lynis.yml
           
