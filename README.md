@@ -7,9 +7,6 @@
 - [Prerequisites](#prerequisites)
 - [Repository Structure](#repository-structure)
 - [Deployment](#deployment)
-- [Configuration](#configuration)
-- [Verification](#verification)
-- [Operations and Maintenance](#operations-and-maintenance)
 - [Security Considerations](#security-considerations)
 - [License](#license)
 
