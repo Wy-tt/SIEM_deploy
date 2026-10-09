@@ -105,6 +105,16 @@
     - Had issues with wazuh taking out my base wazuh user
         - Updated base wazuh user to change the username for ssh or other administrator Access
 
+#### Second build Issues
+- Code
+    - Ran into old filename for lynis.yml "lynus.yml"
+    - needed to remove the old host key from the runner container to allow recconection via ssh
+        - initially changed this from root for both root and runner account, this changed ownership of the file
+          from the runner account to root. updated chown and chgrp to the runner account.
+    - Ansible harden was pointed at the Post config inventory, needed switched to the preconfig inventory.
+        - need a second workflow for any post run changes.
+    
+
 ## Ansible
 - Setup
     - Installed ansible inside the runner
